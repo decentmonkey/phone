@@ -55,7 +55,8 @@ label start:
 
     # These display lines of dialogue.
     call phone_init()
-    call phone_open()
+#    call phone_open()
+    call phone_camera_open()
 
     e "You've created a new Ren'Py game."
 

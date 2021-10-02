@@ -1,5 +1,6 @@
 screen phone(phone_menu_active):
     layer "master"
+    tag phone
     zorder 110
     button:
         background "#00000030"
@@ -12,7 +13,8 @@ screen phone(phone_menu_active):
         at phone_background_fill
 
     frame:
-        at phone_up_down
+        if phone_orientation == 0:
+            at phone_up_down
         pos(740,170)
         background None
         button:
@@ -57,7 +59,9 @@ screen phone(phone_menu_active):
             use phone_button_close()
             use phone_gallery_screen()
 
-
+        if phone_menu_active == "camera":
+            use phone_camera_screen()
+            use phone_button_close()
 
         add "/images/Phone/frame.png"
 

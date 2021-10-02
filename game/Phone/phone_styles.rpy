@@ -14,6 +14,33 @@ transform phone_up_down:
         yoffset 0
         linear 0.2 yoffset 1220
 
+transform camera_rotate:
+#    on show:
+#    alpha 0
+#    pause 0.5
+#    alpha 1
+    yoffset 0
+    ypos 170 + 886/2
+    linear 0.7 rotate 90 ypos 500
+#    linear 0.7 rotate 90 xalign 0.5 yalign -0.1
+    on hide:
+        linear 0.7 ypos 1900
+
+transform camera_show:
+    ypos 1900
+    rotate 90
+#    on show:
+    linear 0.7 ypos 513
+    on hide:
+        linear 0.7 ypos 1900
+
+transform camera_picture:
+    alpha 0.0
+#    on show:
+#        alpha 0.0
+    pause 0.7
+    linear 0.5 alpha 1.0
+
 style phone_main_icon_caption:
 #    font "fonts/OpenSans-Regular.ttf"
 #    font "fonts/arial.ttf"

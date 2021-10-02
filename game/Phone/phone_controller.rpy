@@ -17,6 +17,8 @@ default phone_gallery = []
 default phone_gallery_page = 0
 default phone_gallery_items_on_page = 10
 default phone_last_contacts_count = 0
+default phone_orientation = 0
+default phone_camera_image = False
 #history:
 # [{"chat_name":name, "contact_name":contact_name, "chat_content":[]}]
 # chat format:
@@ -25,6 +27,7 @@ default phone_last_contacts_count = 0
 # phone_add_history(chat_name, contact_name, chat_list)
 
 label phone_open:
+    $ phone_orientation = 0
     $ phone_menu_active = "main"
     call phone_controller()
     return
@@ -32,6 +35,29 @@ label phone_open:
 label phone_hide:
     hide screen phone
     return
+
+label phone_camera_open:
+    $ phone_menu_active = "camera"
+    $ phone_orientation = 1
+    $ phone_camera_image = phone_camera_get_current_image()
+    show screen phone_camera_screen2(phone_camera_image)
+label phone_camera_open_loop1:
+    $ interact_data = None
+    $ interact_data = ui.interact()
+    if interact_data != None and interact_data != False:
+        if interact_data[0] == "close":
+            hide screen phone_camera_screen2
+            return
+        if interact_data[0] == "camera_shoot":
+            python:
+                if phone_camera_image in phone_gallery:
+                    phone_gallery.remove(phone_camera_image)
+                phone_gallery.insert(0, phone_camera_image)
+            m "shoot!"
+            hide screen phone_camera_screen2
+            return
+
+    jump phone_camera_open_loop1
 
 label phone_init:
     $ phone_buttons_new = {
@@ -88,7 +114,8 @@ label phone_open_loop1:
         else:
             phone_buttons_new["contacts"] = False
 
-    show screen phone(phone_menu_active)
+    if phone_menu_active != "camera":
+        show screen phone(phone_menu_active)
     $ interact_data = None
     $ interact_data = ui.interact()
     if interact_data != None and interact_data != False:
@@ -106,6 +133,15 @@ label phone_open_loop1:
                 $ phone_menu_active = "gallery"
                 $ phone_gallery_page = 0
                 jump phone_open_loop1
+            if interact_data[1] == "camera":
+                $ phone_menu_active = "camera"
+                $ phone_orientation = 1
+                $ phone_camera_image = phone_camera_get_current_image()
+#                hide screen phone
+#                show screen phone_camera_screen()
+                show screen phone_camera_screen(phone_camera_image)
+                jump phone_open_loop1
+
         if interact_data[0] == "close":
             if phone_menu_active == "main" or phone_menu_active == "chat_live":
                 hide screen phone
@@ -123,6 +159,12 @@ label phone_open_loop1:
             if phone_menu_active == "gallery":
                 $ phone_menu_active = "main"
                 jump phone_open_loop1
+
+            if phone_menu_active == "camera":
+                hide screen phone_camera_screen
+                return
+#                $ phone_menu_active = "main"
+#                jump phone_open_loop1
 
 
         if interact_data[0] == "call_contact":
@@ -291,5 +333,8 @@ init python:
 
     def phone_get_gallery_image_path(image_name):
         return image_name
+
+    def phone_camera_get_current_image():
+        return "/images/Slides/img_900002.jpg"
 
 #
