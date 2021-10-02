@@ -35,6 +35,12 @@ label start:
         "img_900019"
     ]
 
+    $ phone_add_history("Sophie1", "Sophie", [
+        ["cynthia", t_("Я сегодня задержусь у кузины.")],
+        ["cynthia", "Ей нужно помочь с заданием по математике."],
+        ["", t_("Окей. Если вечером не увидимся, завтра поболтаем :)")],
+        ["cynthia", t_("Окей :)")],
+    ])
     # Show a background. This uses a placeholder by default, but you can
     # add a file (named either "bg room.png" or "bg room.jpg") to the
     # images directory to show it.

@@ -315,6 +315,9 @@ screen phone_messages_list_screen():
                             $ message = message[:30] + "..."
                     $ contactImg = Transform(contact["img"], size=(28,28))
                     $ contactImgCircle = Transform("/images/Phone/mess/contact_circle.png", size=(28,28))
+                    $ newMessage = False
+                    if phone_chat_history_new_flags.has_key(history_cell["chat_name"]) and phone_chat_history_new_flags[history_cell["chat_name"]] == True:
+                        $ newMessage = True
                     button:
                         margin (0,0)
                         padding (0,0)
@@ -324,20 +327,32 @@ screen phone_messages_list_screen():
                         xsize 378
     #                    xpos -64
 
-                        idle_background "#feffff"
-                        hover_background "#e0e0e0"
+                        if newMessage == True:
+                            idle_background "#e5ffe5"
+                            hover_background "#e0f0e0"
+                        else:
+                            idle_background "#feffff"
+                            hover_background "#e0e0e0"
                         add "/images/Phone/mess/bg_contact.png":
                             pos (0,0)
                         add AlphaMask(contactImg, contactImgCircle):
 #                        add contactImg:
                             pos (18,9)
                         text t__(contact_caption) style "phone_contact_name_history":
-                            xpos 56
+                            if newMessage == True:
+                                xpos 75
+                            else:
+                                xpos 56
                             ypos 10
                         text t__(message) style "phone_contact_name_history_text":
+                            xmaximum 370 - 42
                             xpos 18
                             ypos 42
-                            xmaximum 370 - 42
+                            if newMessage == True:
+                                color "#606060"
+                        if newMessage == True:
+                            add Transform("/images/Phone/new_mess.png", size=(16,16)):
+                                pos(50,16)
                         action [
                             Return(["open_history_chat", history_cell["contact_name"], history_cell])
                         ]

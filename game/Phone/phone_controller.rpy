@@ -5,6 +5,7 @@ default phone_buttons_list = []
 default phone_buttons_new = {}
 default phone_menu_active = "main"
 default phone_chat_history = []
+default phone_chat_history_new_flags = {}
 default phone_contact = False
 default phone_current_chat = []
 default phone_current_chat_name = False
@@ -15,10 +16,14 @@ default phone_live_chat_closing = False
 default phone_gallery = []
 default phone_gallery_page = 0
 default phone_gallery_items_on_page = 10
+default phone_last_contacts_count = 0
 #history:
 # [{"chat_name":name, "contact_name":contact_name, "chat_content":[]}]
 # chat format:
 # ["speaker", "message", pause]
+
+# phone_add_history(chat_name, contact_name, chat_list)
+
 label phone_open:
     $ phone_menu_active = "main"
     call phone_controller()
@@ -68,6 +73,21 @@ label phone_controller:
 label phone_open_loop1:
     window hide
     call remove_dialogue()
+
+    python:
+        # check new history messages
+        for history_flag in phone_chat_history_new_flags:
+            if phone_chat_history_new_flags[history_flag] == True:
+                phone_buttons_new["messages"] = True
+            else:
+                phone_buttons_new["messages"] = False
+
+        # check new contacts
+        if phone_last_contacts_count != len(phone_contacts):
+            phone_buttons_new["contacts"] = True
+        else:
+            phone_buttons_new["contacts"] = False
+
     show screen phone(phone_menu_active)
     $ interact_data = None
     $ interact_data = ui.interact()
@@ -75,10 +95,11 @@ label phone_open_loop1:
         if interact_data[0] == "click_main_icon":
             if interact_data[1] == "contacts":
                 $ phone_menu_active = "contacts"
-                $ phone_buttons_new["contacts"] = False
+                $ phone_last_contacts_count = len(phone_contacts)
+#                $ phone_buttons_new["contacts"] = False
                 jump phone_open_loop1
             if interact_data[1] == "messages":
-                $ phone_buttons_new["messages"] = False
+#                $ phone_buttons_new["messages"] = False
                 $ phone_menu_active = "messages_list"
                 jump phone_open_loop1
             if interact_data[1] == "gallery":
@@ -116,6 +137,8 @@ label phone_open_loop1:
             jump phone_open_loop1
 
         if interact_data[0] == "open_history_chat":
+            if phone_chat_history_new_flags.has_key(interact_data[2]["chat_name"]):
+                $ phone_chat_history_new_flags[interact_data[2]["chat_name"]] = False
             $ phone_contact = phone_get_contact_by_contact_name(interact_data[1])
             $ phone_current_chat = interact_data[2]["chat_content"]
             $ phone_menu_active = "open_history_chat"
@@ -192,7 +215,7 @@ label phone_chat_loop1:
         pass
     $ phone_typing = False
     $ phone_current_chat.append(chat_line)
-    $ phone_add_history(phone_current_chat_name, chat_line)
+    $ phone_add_history_line(phone_current_chat_name, chat_line)
     hide screen phone_chat_live_screen
     show screen phone_chat_live_screen()
     pause float(phone_pause_before_typing_time)
@@ -234,12 +257,25 @@ init python:
         phone_current_chat_name = chat_name
         return
 
-    def phone_add_history(chat_name, chat_line):
+    def phone_add_history_line(chat_name, chat_line):
         global phone_chat_history
         for idx in range(0, len(phone_chat_history)):
             if phone_chat_history[idx]["chat_name"] == chat_name:
                 phone_chat_history[idx]["chat_content"].append(chat_line)
         return
+
+    def phone_add_history(chat_name, contact_name, chat_list):
+        global phone_chat_history, phone_chat_history_new_flags
+        for idx in range(0, len(phone_chat_history)):
+            if phone_chat_history[idx]["chat_name"] == chat_name:
+                # нашли такой же чат, удаляем
+                del phone_chat_history[idx]
+        new_chat = {"chat_name": chat_name, "contact_name": contact_name, "chat_content":chat_list}
+        phone_chat_history.insert(0, new_chat)
+        phone_chat_history_new_flags[chat_name] = True
+        return
+
+
 
     def phone_get_contact_by_contact_name(contact_name):
         global phone_contacts
