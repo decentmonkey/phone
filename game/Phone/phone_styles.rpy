@@ -78,3 +78,8 @@ style phone_chatting_typing:
     color "#909090"
     size 20
     font "fonts/SF-Pro-Display-Regular.otf"
+
+style phone_gallery_pagination:
+    color "#303030"
+    size 46
+    font "fonts/tahoma.ttf"

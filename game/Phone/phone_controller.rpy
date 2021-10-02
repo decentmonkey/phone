@@ -121,6 +121,26 @@ label phone_open_loop1:
             $ phone_menu_active = "open_history_chat"
             jump phone_open_loop1
 
+        if interact_data[0] == "gallery_pagination":
+            if interact_data[1] == "left" and phone_gallery_page > 0:
+                $ phone_gallery_page -= 1
+            if interact_data[1] == "right" and len(phone_gallery) - (phone_gallery_page+1)*phone_gallery_items_on_page > 0:
+                $ phone_gallery_page += 1
+            jump phone_open_loop1
+
+        if interact_data[0] == "open_gallery_image":
+            $ galleryImagePath = phone_get_gallery_image_path(phone_gallery[interact_data[1]])
+            if galleryImagePath != False:
+                show screen phone_gallery_image_screen(galleryImagePath)
+#                with fade
+                pause
+                hide screen phone_gallery_image_screen
+            jump phone_open_loop1
+
+
+
+
+
     jump phone_open_loop1
 
     pause
@@ -233,5 +253,7 @@ init python:
             phone_buttons_new[menu_name] = True
         return
 
+    def phone_get_gallery_image_path(image_name):
+        return image_name
 
 #
