@@ -12,6 +12,9 @@ default phone_typing = False
 default phone_typing_name = False
 default phone_close_enabled = True
 default phone_live_chat_closing = False
+default phone_gallery = []
+default phone_gallery_page = 0
+default phone_gallery_items_on_page = 20
 #history:
 # [{"chat_name":name, "contact_name":contact_name, "chat_content":[]}]
 # chat format:
@@ -78,6 +81,10 @@ label phone_open_loop1:
                 $ phone_buttons_new["messages"] = False
                 $ phone_menu_active = "messages_list"
                 jump phone_open_loop1
+            if interact_data[1] == "gallery":
+                $ phone_menu_active = "gallery"
+                $ phone_gallery_page = 0
+                jump phone_open_loop1
         if interact_data[0] == "close":
             if phone_menu_active == "main" or phone_menu_active == "chat_live":
                 hide screen phone
@@ -92,6 +99,10 @@ label phone_open_loop1:
             if phone_menu_active == "open_history_chat":
                 $ phone_menu_active = "messages_list"
                 jump phone_open_loop1
+            if phone_menu_active == "gallery":
+                $ phone_menu_active = "main"
+                jump phone_open_loop1
+
 
         if interact_data[0] == "call_contact":
             $ obj_name = interact_data[1]

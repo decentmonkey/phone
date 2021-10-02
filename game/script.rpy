@@ -9,7 +9,31 @@ define m = Character("Eileen")
 define mcname = "Барди"
 # The game starts here.
 
+
 label start:
+
+    $ phone_gallery = [
+        "img_900000",
+        "img_900001",
+        "img_900002",
+        "img_900003",
+        "img_900004",
+        "img_900005",
+        "img_900006",
+        "img_900007",
+        "img_900008",
+        "img_900009",
+        "img_900010",
+        "img_900011",
+        "img_900012",
+        "img_900013",
+        "img_900014",
+        "img_900015",
+        "img_900016",
+        "img_900017",
+        "img_900018",
+        "img_900019"
+    ]
 
     # Show a background. This uses a placeholder by default, but you can
     # add a file (named either "bg room.png" or "bg room.jpg") to the

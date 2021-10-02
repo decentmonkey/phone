@@ -52,6 +52,13 @@ screen phone(phone_menu_active):
             use phone_button_close()
             use phone_open_history_chat_screen()
 
+        if phone_menu_active == "gallery":
+            add "#f8f9fa" xsize 376 ysize 812 pos(28, 25)
+            use phone_button_close()
+            use phone_gallery_screen()
+
+
+
         add "/images/Phone/frame.png"
 
 screen phone_button_close():
