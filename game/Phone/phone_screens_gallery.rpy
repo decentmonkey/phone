@@ -9,9 +9,9 @@ screen phone_gallery_screen:
             xpos -8
             ypos 16
     fixed:
-        add "#ffffff" xsize 376 ysize 630 pos(28, 160)
+        add "#ffffff" xsize 376 ysize 571 pos(28, 160)
         add "#c2c2c2" xsize 376 ysize 1 pos(28,160)
-        add "#c2c2c2" xsize 376 ysize 1 pos(28,130+660)
+        add "#c2c2c2" xsize 376 ysize 1 pos(28,130+600)
 
     frame:
         pos(31,168)
@@ -21,15 +21,18 @@ screen phone_gallery_screen:
             spacing 0
             box_wrap_spacing 0
             box_wrap True
-            for gal_idx in range(phone_gallery_page*phone_gallery_items_on_page, phone_gallery_page*phone_gallery_items_on_page+phone_gallery_items_on_page-1):
+            for gal_idx in range(phone_gallery_page*phone_gallery_items_on_page, phone_gallery_page*phone_gallery_items_on_page+phone_gallery_items_on_page):
                 if gal_idx < len(phone_gallery):
-                    $ galleryImg = Transform(phone_gallery[gal_idx], size=(115,67))
+                    $ galleryImg = Transform(phone_gallery[gal_idx], size=(175,103))
                     button:
                         margin (0,0)
                         padding (0,0)
                         ypos 0
                         xpos 0
-                        ysize 71
-                        xsize 120
+                        ysize 110
+                        xsize 180
                         add galleryImg:
                             pos (0,0)
+                        action [
+                            Return(["open_gallery_image", gal_idx])
+                        ]

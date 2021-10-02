@@ -14,7 +14,7 @@ default phone_close_enabled = True
 default phone_live_chat_closing = False
 default phone_gallery = []
 default phone_gallery_page = 0
-default phone_gallery_items_on_page = 20
+default phone_gallery_items_on_page = 10
 #history:
 # [{"chat_name":name, "contact_name":contact_name, "chat_content":[]}]
 # chat format:
@@ -109,7 +109,7 @@ label phone_open_loop1:
             $ phone_contact = interact_data[2]
             $ phone_menu_active = "calling_screen"
             show screen phone(phone_menu_active)
-            pause 0.2
+            pause 2.0
 #            call process_hooks("call_contact", "phone")
             $ phone_current_chat = []
             call cynthia_chat1()
@@ -196,7 +196,9 @@ label phone_chat_loop2:
     return
 
 label phone_chat_menu(chat_menu):
+    $ phone_close_enabled = False
     call screen phone_live_chat_menu_screen(chat_menu)
+    $ phone_close_enabled = True
     return _return
 
 
