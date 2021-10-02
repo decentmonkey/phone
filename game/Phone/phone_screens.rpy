@@ -267,6 +267,10 @@ screen phone_chat_live_screen():
 
 
         vbar value YScrollValue("vp1") xpos 397 ypos 161 xsize 8 ysize 629
+        if phone_typing == True:
+            fixed:
+                pos(50,795)
+                text t__(phone_typing_name) + " " + t__("печатает...") style "phone_chatting_typing"
 
 screen phone_messages_list_screen():
     frame:
@@ -411,5 +415,37 @@ screen phone_open_history_chat_screen():
 
 
         vbar value YScrollValue("vp4") xpos 397 ypos 161 xsize 8 ysize 629
+
+screen phone_live_chat_menu_screen(chat_menu):
+    layer "master"
+    zorder 112
+    modal True
+    fixed:
+        pos(1185,830)
+        frame:
+            background None
+            xmaximum 352
+            vbox:
+                spacing 10
+                xfill True
+                yanchor 1.0
+                yalign 1.0
+                for idx in range(0, len(chat_menu)):
+                    button:
+                        xalign 0.0
+                        background Frame("/images/Phone/phone_chat_menu_frame.png", 13, 13)
+                        hover_background Frame("/images/Phone/phone_chat_menu_frame_hover.png", 13, 13)
+                        left_padding 20
+                        right_padding 20
+                        top_padding 10
+                        bottom_padding 10
+                        text t__(chat_menu[idx]) style "phone_chatting_menu_option":
+                            xmaximum 250
+                        action [
+                            Return(idx)
+                        ]
+
+
+
 
 #

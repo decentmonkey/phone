@@ -9,6 +9,7 @@ default phone_contact = False
 default phone_current_chat = []
 default phone_current_chat_name = False
 default phone_typing = False
+default phone_typing_name = False
 default phone_close_enabled = True
 default phone_live_chat_closing = False
 #history:
@@ -62,6 +63,8 @@ label phone_init:
 label phone_controller:
 
 label phone_open_loop1:
+    window hide
+    call remove_dialogue()
     show screen phone(phone_menu_active)
     $ interact_data = None
     $ interact_data = ui.interact()
@@ -69,13 +72,16 @@ label phone_open_loop1:
         if interact_data[0] == "click_main_icon":
             if interact_data[1] == "contacts":
                 $ phone_menu_active = "contacts"
+                $ phone_buttons_new["contacts"] = False
                 jump phone_open_loop1
             if interact_data[1] == "messages":
+                $ phone_buttons_new["messages"] = False
                 $ phone_menu_active = "messages_list"
                 jump phone_open_loop1
         if interact_data[0] == "close":
-            if phone_menu_active == "main":
+            if phone_menu_active == "main" or phone_menu_active == "chat_live":
                 hide screen phone
+                hide screen phone_chat_live_screen
                 return
             if phone_menu_active == "contacts":
                 $ phone_menu_active = "main"
@@ -96,7 +102,7 @@ label phone_open_loop1:
 #            call process_hooks("call_contact", "phone")
             $ phone_current_chat = []
             call cynthia_chat1()
-            return
+            jump phone_open_loop1
 
         if interact_data[0] == "open_history_chat":
             $ phone_contact = phone_get_contact_by_contact_name(interact_data[1])
@@ -116,6 +122,8 @@ label phone_open_loop1:
     return
 
 label phone_chat(chat):
+    window hide
+    call remove_dialogue()
     $ phone_menu_active = "chat_live"
     $ chat_line_idx = 0
     $ phone_close_enabled = False
@@ -139,9 +147,19 @@ label phone_chat_loop1:
             message_pause = 0.3
         phone_typing = True
 
+    if chat_line[0] == "" or chat_line[0] == "bardie" or chat_line[0] == "bardie_t":
+#        sound iphone_typing
+        $ phone_typing_name = "[mcname]"
+        pass
+    else:
+        $ phone_typing_name = phone_contact["caption"]
     hide screen phone_chat_live_screen
     show screen phone_chat_live_screen()
     pause float(message_pause)
+    if chat_line[0] != "" and chat_line[0] != "bardie" and chat_line[0] != "bardie_t":
+#        sound iphone_text_message2
+        pass
+    $ phone_typing = False
     $ phone_current_chat.append(chat_line)
     $ phone_add_history(phone_current_chat_name, chat_line)
     hide screen phone_chat_live_screen
@@ -152,6 +170,7 @@ label phone_chat_loop1:
         jump phone_chat_loop1
 
     $ phone_close_enabled = True
+    return
 label phone_chat_loop2:
     show screen phone(phone_menu_active)
     $ interact_data = None
@@ -164,6 +183,11 @@ label phone_chat_loop2:
             return
     jump phone_chat_loop2
     return
+
+label phone_chat_menu(chat_menu):
+    call screen phone_live_chat_menu_screen(chat_menu)
+    return _return
+
 
 init python:
     def phone_start_new_chat(chat_name, contact_name):
@@ -190,6 +214,11 @@ init python:
             if contact["name"] == contact_name:
                 return contact
 
+    def phone_set_new(menu_name):
+        global phone_buttons_new
+        if phone_buttons_new.has_key(menu_name):
+            phone_buttons_new[menu_name] = True
+        return
 
 
 #

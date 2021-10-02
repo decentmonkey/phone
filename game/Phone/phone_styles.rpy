@@ -68,3 +68,13 @@ style phone_contact_name_history_text:
     color "#b0b0b0"
     size 22
     font "fonts/SF-Pro-Display-Regular.otf"
+
+style phone_chatting_menu_option:
+    color "#060606"
+    size 24
+    font "fonts/SF-Pro-Display-Regular.otf"
+
+style phone_chatting_typing:
+    color "#909090"
+    size 20
+    font "fonts/SF-Pro-Display-Regular.otf"

@@ -37,3 +37,11 @@ label start:
     # This ends the game.
 
     return
+
+label remove_dialogue():
+    python:
+        renpy.hide_screen("say")
+        renpy.hide_screen("choice")
+        renpy.hide("window")
+        dialogue_active_flag = False
+    return
