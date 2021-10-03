@@ -44,10 +44,11 @@ label start:
     ])
 
     $ phone_instagram_posts = [
-        ["/images/Phone/insta/1.jpg", "blabla"],
-        ["/images/Phone/insta/2.jpg"],
-        ["/images/Phone/insta/3.jpg"],
-        ["/images/Phone/insta/4.jpg"]
+        ["/images/Phone/insta/Olivia_feed1.jpg", "blabla"],
+        ["/images/Phone/insta/Olivia_feed2.jpg", "blabla"],
+        ["/images/Phone/insta/Olivia_feed3.jpg", "blabla"],
+        ["/images/Phone/insta/Olivia_feed4.jpg", "blabla"],
+        ["/images/Phone/insta/Olivia_feed5.jpg", "blabla"]
     ]
     # Show a background. This uses a placeholder by default, but you can
     # add a file (named either "bg room.png" or "bg room.jpg") to the

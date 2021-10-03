@@ -179,7 +179,7 @@ label phone_open_loop1:
                 hide screen phone
                 hide screen phone_chat_live_screen
                 return
-            if phone_menu_active == "contacts" or phone_menu_active == "preferences_menu" or phone_menu_active == "preferences_backgrounds" or phone_menu_active == "instagram" or phone_menu_active == "notes":
+            if phone_menu_active == "contacts" or phone_menu_active == "preferences_menu" or phone_menu_active == "preferences_backgrounds" or phone_menu_active == "instagram" or phone_menu_active == "notes" or phone_menu_active=="preferences_rrmeter":
                 $ phone_menu_active = "main"
                 jump phone_open_loop1
             if phone_menu_active == "messages_list":
