@@ -1,19 +1,39 @@
 screen phone_preferences_rrmeter():
     fixed:
         $ barValue = float(rrmeter + 50)/100
-        bar:
-            xpos 170
-            ypos 220
-            value AnimatedValue(barValue, 1.0, 1.0, barValue)
-            xoffset 5
-            xysize (69,327)
-            bar_vertical True
-            top_bar "/icons/bar/bar_empty.png"
-            bottom_bar "/icons/bar/bar_full.png"
-            thumb "/icons/bar/bar_thumb.png"
-            bottom_gutter 15
-            top_gutter 18
-            thumb_offset 22
+        if barValue >= 0.5:
+            bar:
+                xpos 170
+                ypos 220
+                value AnimatedValue(barValue, 1.0, 1.0, barValue)
+                xoffset 5
+                xysize (69,327)
+                bar_vertical True
+                top_bar "/icons/bar/bar_empty.png"
+                bottom_bar "/icons/bar/bar_full.png"
+                thumb "/icons/bar/bar_thumb.png"
+                bottom_gutter 15
+                top_gutter 18
+                thumb_offset 22
+        else:
+            bar:
+                xpos 170
+                ypos 220
+                value AnimatedValue(barValue, 1.0, 1.0, barValue)
+                xoffset 5
+                xysize (69,327)
+                bar_vertical True
+                top_bar "/icons/bar/bar3_empty.png"
+                bottom_bar "/icons/bar/bar3_full.png"
+                thumb "/icons/bar/bar3_thumb.png"
+                bottom_gutter 15
+                top_gutter 18
+                thumb_offset 22
+
+        add "/images/Phone/rrmeter_rabbit.png":
+            pos(230,187)
+        add "/images/Phone/rrmeter_rat.png":
+            pos(120,460)
 
 screen phone_preferences_backgrounds():
     frame:

@@ -8,7 +8,7 @@ define m = Character("Eileen")
 
 define mcname = "Барди"
 # The game starts here.
-default rrmeter = 0
+default rrmeter = -10
 default imagesSizesCache = {}
 
 label start:
