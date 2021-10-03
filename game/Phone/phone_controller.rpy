@@ -29,10 +29,20 @@ default phone_instagram_posts = []
 # ["speaker", "message", pause]
 
 # phone_add_history(chat_name, contact_name, chat_list)
-
+# phone_set_new(menu_name)
+# call phone_open() - открывается на главном меню
+# call phone_open_menu(menu_name) - открывается на определенном меню
+# call phone_hide() - закрывается
+# call phone_camera_open() - открывается в режиме камеры
 label phone_open:
-    $ phone_orientation = 0
     $ phone_menu_active = "main"
+    $ phone_orientation = 0
+    call phone_controller()
+    return
+
+label phone_open_menu(menu_active):
+    $ phone_menu_active = "main"
+    $ phone_orientation = 0
     call phone_controller()
     return
 
