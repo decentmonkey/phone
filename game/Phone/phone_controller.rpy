@@ -22,6 +22,7 @@ default phone_camera_image = False
 default phone_background = 0
 default phone_backgrounds_list = []
 default phone_preferences_list = []
+default phone_instagram_posts = []
 #history:
 # [{"chat_name":name, "contact_name":contact_name, "chat_content":[]}]
 # chat format:
@@ -156,13 +157,17 @@ label phone_open_loop1:
             if interact_data[1] == "preferences":
                 $ phone_menu_active = "preferences_menu"
                 jump phone_open_loop1
+            if interact_data[1] == "instagram":
+                $ phone_menu_active = "instagram"
+                jump phone_open_loop1
+
 
         if interact_data[0] == "close":
             if phone_menu_active == "main" or phone_menu_active == "chat_live":
                 hide screen phone
                 hide screen phone_chat_live_screen
                 return
-            if phone_menu_active == "contacts" or phone_menu_active == "preferences_menu" or phone_menu_active == "preferences_backgrounds":
+            if phone_menu_active == "contacts" or phone_menu_active == "preferences_menu" or phone_menu_active == "preferences_backgrounds" or phone_menu_active == "instagram":
                 $ phone_menu_active = "main"
                 jump phone_open_loop1
             if phone_menu_active == "messages_list":
@@ -229,6 +234,7 @@ label phone_open_loop1:
             $ phone_background = interact_data[1]
             $ phone_menu_active = "main"
             jump phone_open_loop1
+
 
 
     jump phone_open_loop1

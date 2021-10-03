@@ -79,6 +79,11 @@ screen phone(phone_menu_active):
             use phone_button_close()
             use phone_preferences_backgrounds()
 
+        if phone_menu_active == "instagram":
+            add "#f8f9fa" xsize 376 ysize 812 pos(28, 25)
+            use phone_button_close()
+            use phone_instagram_screen()
+
 
         add "/images/Phone/frame.png"
 

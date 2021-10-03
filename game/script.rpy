@@ -9,6 +9,7 @@ define m = Character("Eileen")
 define mcname = "Барди"
 # The game starts here.
 default rrmeter = 0
+default imagesSizesCache = {}
 
 label start:
 
@@ -41,6 +42,13 @@ label start:
         ["", t_("Окей. Если вечером не увидимся, завтра поболтаем :)")],
         ["cynthia", t_("Окей :)")],
     ])
+
+    $ phone_instagram_posts = [
+        ["/images/Phone/insta/1.jpg", "blabla"],
+        ["/images/Phone/insta/2.jpg"],
+        ["/images/Phone/insta/3.jpg"],
+        ["/images/Phone/insta/4.jpg"]
+    ]
     # Show a background. This uses a placeholder by default, but you can
     # add a file (named either "bg room.png" or "bg room.jpg") to the
     # images directory to show it.
@@ -76,3 +84,12 @@ label remove_dialogue():
         renpy.hide("window")
         dialogue_active_flag = False
     return
+
+init python:
+    def getImageSize(img, imageName):
+        global imagesSizesCache
+        if imagesSizesCache.has_key(imageName):
+            return imagesSizesCache[imageName]
+        imageSize = im.cache.get(img).get_size()
+        imagesSizesCache[imageName] = imageSize
+        return imageSize
