@@ -26,7 +26,8 @@ screen phone(phone_menu_active):
             alternate ShowMenu("save")
 
         if phone_menu_active == "main":
-            add "/images/Phone/bg_1.png":
+            add phone_backgrounds_list[phone_background]:
+#            add "/images/Phone/bg_1.png":
                 pos(28,25)
             use phone_button_close()
             use phone_main()
@@ -62,6 +63,22 @@ screen phone(phone_menu_active):
         if phone_menu_active == "camera":
             use phone_camera_screen()
             use phone_button_close()
+
+        if phone_menu_active == "preferences_menu":
+            add "#f8f9fa" xsize 376 ysize 812 pos(28, 25)
+            use phone_button_close()
+            use phone_preferences_list_screen()
+
+        if phone_menu_active == "preferences_rrmeter":
+            add "#f8f9fa" xsize 376 ysize 812 pos(28, 25)
+            use phone_button_close()
+            use phone_preferences_rrmeter()
+
+        if phone_menu_active == "preferences_backgrounds":
+            add "#f8f9fa" xsize 376 ysize 812 pos(28, 25)
+            use phone_button_close()
+            use phone_preferences_backgrounds()
+
 
         add "/images/Phone/frame.png"
 
@@ -470,6 +487,47 @@ screen phone_live_chat_menu_screen(chat_menu):
                         action [
                             Return(idx)
                         ]
+
+screen phone_preferences_list_screen():
+    frame:
+        pos(46,85)
+
+        background None
+        xmaximum 378
+        text t__("Настройки") style "phone_header1":
+            xpos -8
+            ypos 16
+
+        viewport id "vp5":
+            draggable True
+            xpos -24
+            ypos 70
+            xysize(378, 690)
+            yinitial 0.0
+            arrowkeys True
+            mousewheel True
+            vbox:
+#                xpos -24
+                spacing 0
+                first_spacing 0
+                box_wrap_spacing 0
+
+                for preferences_cell in phone_preferences_list:
+                    button:
+                        margin (0,0)
+                        padding (0,0)
+                        ypos 0
+                        xpos 0
+                        ysize 64
+                        xsize 378
+                        idle_background "#feffff"
+                        hover_background "#e0e0e0"
+                        text t__(preferences_cell["caption"]) style "phone_preferences_menu":
+                            pos (20,10)
+                        action [
+                            Return([preferences_cell["name"]])
+                        ]
+        vbar value YScrollValue("vp5") xpos 343 ypos 70 xsize 8 ysize 654
 
 
 

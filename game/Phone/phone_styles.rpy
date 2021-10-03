@@ -110,3 +110,8 @@ style phone_gallery_pagination:
     color "#303030"
     size 46
     font "fonts/tahoma.ttf"
+
+style phone_preferences_menu:
+    color "#060606"
+    size 30
+    font "fonts/SF-Pro-Display-Regular.otf"

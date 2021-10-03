@@ -19,6 +19,9 @@ default phone_gallery_items_on_page = 10
 default phone_last_contacts_count = 0
 default phone_orientation = 0
 default phone_camera_image = False
+default phone_background = 0
+default phone_backgrounds_list = []
+default phone_preferences_list = []
 #history:
 # [{"chat_name":name, "contact_name":contact_name, "chat_content":[]}]
 # chat format:
@@ -92,6 +95,15 @@ label phone_init:
 #        {"name": "instagram", "caption": t_("Инстаграм"),  "img":"/images/Phone/icons/instagram.png", "img_new":"/images/Phone/icons/instagram_new.png", "active":True},
 #        {"name": "preferences", "caption": t_("Настройки"),  "img":"/images/Phone/icons/preferens.png", "img_new":"/images/Phone/icons/preferens_new.png", "active":True}
     ]
+    $ phone_preferences_list = [
+        {"name":"preferences_rrmeter", "caption": t_("RR Meter")},
+        {"name":"preferences_backgrounds", "caption": t_("Изменить фон")}
+    ]
+    $ phone_backgrounds_list = [
+        "/images/Phone/bg_1.png",
+        "/images/Phone/option/bg_2.png"
+    ]
+
     return
 
 label phone_controller:
@@ -141,13 +153,16 @@ label phone_open_loop1:
 #                show screen phone_camera_screen()
                 show screen phone_camera_screen(phone_camera_image)
                 jump phone_open_loop1
+            if interact_data[1] == "preferences":
+                $ phone_menu_active = "preferences_menu"
+                jump phone_open_loop1
 
         if interact_data[0] == "close":
             if phone_menu_active == "main" or phone_menu_active == "chat_live":
                 hide screen phone
                 hide screen phone_chat_live_screen
                 return
-            if phone_menu_active == "contacts":
+            if phone_menu_active == "contacts" or phone_menu_active == "preferences_menu" or phone_menu_active == "preferences_backgrounds":
                 $ phone_menu_active = "main"
                 jump phone_open_loop1
             if phone_menu_active == "messages_list":
@@ -202,20 +217,21 @@ label phone_open_loop1:
                 hide screen phone_gallery_image_screen
             jump phone_open_loop1
 
+        if interact_data[0] == "preferences_rrmeter":
+            $ phone_menu_active = "preferences_rrmeter"
+            jump phone_open_loop1
 
+        if interact_data[0] == "preferences_backgrounds":
+            $ phone_menu_active = "preferences_backgrounds"
+            jump phone_open_loop1
 
+        if interact_data[0] == "preferences_backgrounds_select":
+            $ phone_background = interact_data[1]
+            $ phone_menu_active = "main"
+            jump phone_open_loop1
 
 
     jump phone_open_loop1
-
-    pause
-    pause
-    pause
-    pause
-    pause
-    pause
-    m "phone_open"
-    return
 
 label phone_chat(chat):
     window hide
