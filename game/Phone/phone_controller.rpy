@@ -170,14 +170,16 @@ label phone_open_loop1:
             if interact_data[1] == "instagram":
                 $ phone_menu_active = "instagram"
                 jump phone_open_loop1
-
+            if interact_data[1] == "notes":
+                $ phone_menu_active = "notes"
+                jump phone_open_loop1
 
         if interact_data[0] == "close":
             if phone_menu_active == "main" or phone_menu_active == "chat_live":
                 hide screen phone
                 hide screen phone_chat_live_screen
                 return
-            if phone_menu_active == "contacts" or phone_menu_active == "preferences_menu" or phone_menu_active == "preferences_backgrounds" or phone_menu_active == "instagram":
+            if phone_menu_active == "contacts" or phone_menu_active == "preferences_menu" or phone_menu_active == "preferences_backgrounds" or phone_menu_active == "instagram" or phone_menu_active == "notes":
                 $ phone_menu_active = "main"
                 jump phone_open_loop1
             if phone_menu_active == "messages_list":

@@ -84,6 +84,10 @@ screen phone(phone_menu_active):
             use phone_button_close()
             use phone_instagram_screen()
 
+        if phone_menu_active == "notes":
+            add "/images/Phone/bg_notes.png" pos(28, 25)
+            use phone_button_close()
+            use phone_notes_screen()
 
         add "/images/Phone/frame.png"
 
