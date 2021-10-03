@@ -120,3 +120,12 @@ style phone_instagram_caption:
     color "#060606"
     size 14
     font "fonts/SF-Pro-Display-Bold.otf"
+
+style phone_notes_text:
+    size 32
+    color "#38383a"
+#    font "fonts/tahoma.ttf"
+    font "fonts/baskerville_bolditalic_win95bt.ttf"
+
+style phone_notes_category_text:
+    underline True

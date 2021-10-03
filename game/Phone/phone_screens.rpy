@@ -86,6 +86,9 @@ screen phone(phone_menu_active):
 
         if phone_menu_active == "notes":
             add "/images/Phone/bg_notes.png" pos(28, 25)
+            add "#f8f9fa" xsize 376 ysize 72 pos(28, 25)
+#            add "#ffffff" xsize 376 ysize 571 pos(28, 96)
+            add "#c2c2c2" xsize 376 ysize 1 pos(28,96)
             use phone_button_close()
             use phone_notes_screen()
 
