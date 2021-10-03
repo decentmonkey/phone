@@ -31,7 +31,15 @@ screen phone_instagram_screen():
                         xsize postWidth
                         ysize postHeight
                     if len(post)>1:
-                        text t__(post[1])
+                        frame:
+                            xmaximum 348
+                            yminimum 50
+                            background "#ffffff"
+                            pos(10,485)
+                            text t__(post[1]) style "phone_instagram_caption":
+                                pos(0, 0.5)
+                                yanchor 0.5
+                                line_spacing 3
                     action [
                         Return([False])
                     ]

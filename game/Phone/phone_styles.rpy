@@ -115,3 +115,8 @@ style phone_preferences_menu:
     color "#060606"
     size 30
     font "fonts/SF-Pro-Display-Regular.otf"
+
+style phone_instagram_caption:
+    color "#060606"
+    size 14
+    font "fonts/SF-Pro-Display-Bold.otf"
